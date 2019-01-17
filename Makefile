@@ -6,12 +6,11 @@
 #    By: kbatz <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/25 21:10:51 by kbatz             #+#    #+#              #
-#    Updated: 2019/01/17 20:15:31 by kbatz            ###   ########.fr        #
+#    Updated: 2019/01/17 21:16:54 by kbatz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= project
-LIB		= libft
+NAME	= libftprintf.a
 
 # **************************************************************************** #
 
@@ -22,15 +21,11 @@ TESTDIR	= test/
 
 # **************************************************************************** #
 
-LIBDIR	= $(addsuffix /,$(LIB))
-LHD		= $(addsuffix $(HDRDIR),$(LIBDIR))
-#LHD		= $(LIBDIR)
 SRC		= $(patsubst $(SRCDIR)%,%,$(wildcard $(SRCDIR)*.c))
 OBJ		= $(SRC:%.c=%.o)
 HDR		= $(wildcard $(HDRDIR)*.h)
 TEST	= $(patsubst $(TESTDIR),%,$(wildcard $(TESTDIR)*))
-LFLAG	= $(addprefix -L,$(LIBDIR)) $(addprefix -,$(patsubst lib%,l%,$(LIB)))
-IFLAG	= $(addprefix -I,$(HDRDIR)) $(addprefix -I,$(LHD))
+IFLAG	= $(addprefix -I,$(HDRDIR))
 CFLAG	= -Wall -Wextra -Werror
 
 # **************************************************************************** #
@@ -40,10 +35,10 @@ vpath %.o $(OBJDIR)
 
 # **************************************************************************** #
 
-all: $(addsuffix .all,$(LIB)) $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJDIR) $(OBJ)
-	gcc $(addprefix $(OBJDIR), $(OBJ)) -o $(NAME) $(IFLAG) $(LFLAG)
+	gcc $(addprefix $(OBJDIR), $(OBJ)) -o $(NAME) $(IFLAG)
 
 $(OBJ): %.o: %.c $(HDR)
 	gcc $(CFLAG) $(IFLAG) -c $< -o $(OBJDIR)$@
@@ -51,16 +46,13 @@ $(OBJ): %.o: %.c $(HDR)
 $(OBJDIR):
 	mkdir $(OBJDIR)
 
-clean: $(addsuffix .fclean,$(LIB))
+clean:
 	rm -Rf $(OBJDIR)
 
 fclean: clean
 	rm -Rf $(NAME)
 
 re: fclean all
-
-lib%:
-	make -C $(subst .,/ ,$@)
 
 norm:
 	norminette $(addprefix $(SRCDIR), $(SRC))
