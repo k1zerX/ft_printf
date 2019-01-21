@@ -6,26 +6,30 @@
 #    By: kbatz <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/25 21:10:51 by kbatz             #+#    #+#              #
-#    Updated: 2019/01/17 21:16:54 by kbatz            ###   ########.fr        #
+#    Updated: 2019/01/21 21:50:00 by kbatz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libftprintf.a
+LIB		= libft
 
 # **************************************************************************** #
 
-SRCDIR	= src/
+SRCDIR	= ./
 OBJDIR	= .obj/
-HDRDIR	= include/
+HDRDIR	= ./
 TESTDIR	= test/
 
 # **************************************************************************** #
 
+LIBDIR	= $(addsuffix /,$(LIB))
+LHD		= $(LIBDIR)
 SRC		= $(patsubst $(SRCDIR)%,%,$(wildcard $(SRCDIR)*.c))
 OBJ		= $(SRC:%.c=%.o)
 HDR		= $(wildcard $(HDRDIR)*.h)
 TEST	= $(patsubst $(TESTDIR),%,$(wildcard $(TESTDIR)*))
-IFLAG	= $(addprefix -I,$(HDRDIR))
+LFLAG	= $(addprefix -L,$(LIBDIR)) $(addprefix -,$(patsubst lib%,l%,$(LIB)))
+IFLAG	= $(addprefix -I,$(HDRDIR)) $(addprefix -I,$(LHD))
 CFLAG	= -Wall -Wextra -Werror
 
 # **************************************************************************** #
@@ -35,10 +39,12 @@ vpath %.o $(OBJDIR)
 
 # **************************************************************************** #
 
-all: $(NAME)
+all: $(addsuffix .all,$(LIB)) $(NAME)
 
 $(NAME): $(OBJDIR) $(OBJ)
-	gcc $(addprefix $(OBJDIR), $(OBJ)) -o $(NAME) $(IFLAG)
+	echo $(SRC)
+	echo $(OBJ)
+	ar rc $(NAME) $(addprefix $(OBJDIR),$(OBJ))
 
 $(OBJ): %.o: %.c $(HDR)
 	gcc $(CFLAG) $(IFLAG) -c $< -o $(OBJDIR)$@
@@ -46,7 +52,7 @@ $(OBJ): %.o: %.c $(HDR)
 $(OBJDIR):
 	mkdir $(OBJDIR)
 
-clean:
+clean: $(addsuffix .fclean,$(LIB))
 	rm -Rf $(OBJDIR)
 
 fclean: clean
@@ -54,11 +60,16 @@ fclean: clean
 
 re: fclean all
 
+lib%:
+	make -C $(subst .,/ ,$@)
+
 norm:
 	norminette $(addprefix $(SRCDIR), $(SRC))
 	norminette $(addprefix $(HDRDIR), $(HDR))
 
 t: all $(TEST)
+	gcc $(addprefix $(OBJDIR), $(OBJ)) -o run $(IFLAG) $(LFLAG) -L./ -lftprintf
+	./run
 
 $(TEST): %:
 	@echo "--------------------------------------------------"
