@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:39:27 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/21 21:39:41 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/22 17:44:15 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,5 @@ char		*f_b(va_list ap, const char *restrict str, int len);
 char		*f_r(va_list ap, const char *restrict str, int len);
 char		*f_k	(va_list ap, const char *restrict str, int len);*/
 char		*f(va_list ap);
-
 
 #endif
