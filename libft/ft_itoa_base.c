@@ -6,19 +6,19 @@
 /*   By: krakharo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 23:06:27 by krakharo          #+#    #+#             */
-/*   Updated: 2018/11/24 23:07:17 by krakharo         ###   ########.fr       */
+/*   Updated: 2019/01/23 19:16:31 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_itoa_base(int n, int base)
+char	*ft_itoa_base(long long int n, int base)
 {
-	char	*res;
-	char	*b;
-	int		i;
-	int		tmp;
-	int		sign;
+	char			*res;
+	char			*b;
+	long long int	i;
+	long long int	tmp;
+	int				sign;
 
 	b = "0123456789ABCDEF";
 	tmp = n;

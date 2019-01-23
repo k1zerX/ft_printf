@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 17:48:49 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/17 17:11:33 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 19:20:08 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,6 @@ t_elem					*ft_new_elem(void *content, \
 void					*ft_realloc(void *src, size_t size, long dif);
 void					*ft_min(void *a, void *b, size_t size);
 void					*ft_max(void *a, void *b, size_t size);
-char					*ft_itoa_base(int n, int base);
+char					*ft_itoa_base(long long int n, int base);
 
 #endif
