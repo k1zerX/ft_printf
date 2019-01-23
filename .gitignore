@@ -1,6 +1,6 @@
 .DS_Store
 *.swp
 *.o
-project
+*.a
 run
-libftprintf.a
+main.c

@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 17:02:41 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/23 19:53:07 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 20:26:30 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ t_format	format(va_list ap, const char *restrict format, int len)
 			f.flags |= 1 << 3;
 		else if (*format == '\'')
 			f.flags |= 1 << 2;
+		else if (*format == 'l')
+			f.type++;
+		else if (*format == 'h')
+			f.type--;
 		format++;
 	}
 	if (f.flags & 32)
