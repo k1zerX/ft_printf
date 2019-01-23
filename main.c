@@ -6,11 +6,12 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 19:57:06 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/20 21:20:24 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 16:20:45 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "ft_printf.h"
 
 void	print_bits(void *a, unsigned long size)
 {
@@ -29,6 +30,17 @@ void	print_bits(void *a, unsigned long size)
 	}
 	printf("\n");
 }
+
+int		main(void)
+{
+	ft_printf("hello % .100d\n\n\n world %-10d\n\n |gg = %s\n", 3, -7, "kakak");/*
+	ft_printf("%+d\n\n\n", -3);
+	ft_printf("%-d\n\n\n", -15);
+	ft_printf("%0d\n\n\n", 29);
+	ft_printf("% d\n\n\n", -163);*/
+	return (0);
+}
+
 /*
 int		main(void)
 {

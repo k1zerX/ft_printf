@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:20:44 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/23 15:29:23 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 16:19:41 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,4 @@ int		ft_printf(const char *restrict str, ...)
 	}
 	va_end(ap);
 	return (res);
-}
-
-int		main(void)
-{
-	ft_printf("% .100d\n\n\n", 3);/*
-	ft_printf("%+d\n\n\n", -3);
-	ft_printf("%-d\n\n\n", -15);
-	ft_printf("%0d\n\n\n", 29);
-	ft_printf("% d\n\n\n", -163);*/
-	return (0);
 }

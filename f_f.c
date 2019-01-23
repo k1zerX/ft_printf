@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 19:33:54 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/21 21:48:36 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 16:17:39 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@ char	*f_f(va_list ap)
 	return (NULL);
 }
 /*
-int     f_f(va_list ap, const char *restrict str, int len)
+char	*f_f(va_list ap)
 {
 	double			a;
 	unsigned char	*buf;
+	char			*str;
 	int				p;
-	int				d;
+	long long int	d;
 	int				j;
 
+	str = NULL;
 	a = va_arg(ap, double);
 	//printf("%.0f =\t", a);
 	//print_bits(&a, 8);
