@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:39:27 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/23 16:20:13 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 20:11:10 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_format
 	char		flags;
 	int			width;
 	int			precision;
+	char		type;
 }				t_format;
 
 int			ft_printf(const char *restrict str, ...);

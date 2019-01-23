@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 17:48:49 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/23 19:20:08 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 19:51:52 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct			s_stack
 	size_t				len;
 }						t_stack;
 
-int						ft_atoi(const char *str);
+long long int			ft_atoi(const char *str);
 void					ft_bzero(void *s, size_t n);
 int						ft_isalnum(int c);
 int						ft_isalpha(int c);
