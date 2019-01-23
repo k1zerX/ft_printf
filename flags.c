@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 17:02:41 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/21 21:36:02 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 15:29:22 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		mini_atoi(va_list ap, const char *restrict *format, int *len)
 	if (**format == '*')
 		res = va_arg(ap, int);
 	else
-		while (ft_isdigit(**format) && (*len)--)
+		while (ft_isdigit(**format) && (*len)-- + 1)
 			res = res * 10 + *(*format)++ - 48;
 	return (res);
 }
@@ -32,14 +32,14 @@ t_format	format(va_list ap, const char *restrict format, int len)
 {
 	t_format	f;
 
-	f.flags = 0;
+	ft_bzero(&f, sizeof(f));
 	while (len-- > 0)
 	{
 		if (*format == '.')
 		{
-			f.precision = mini_atoi(ap, &format, &len);
 			format++;
 			len--;
+			f.precision = mini_atoi(ap, &format, &len);
 		}
 		if (*format == '0')
 			f.flags |= 1 << 6;
@@ -75,25 +75,34 @@ int			ft_print(t_format f, char *str)
 
 	len = ft_strlen(str);
 	c = f.flags & 64 ? '0' : ' ';
-	f.precision += f.width;
+	//printf("%d\n", f.flags);
+	//printf("111111width = %d, precision = %d\n", f.width, f.precision);
+	f.precision -= f.width;
 	f.width -= len;
+	//printf("width = %d, precision = %d\n", f.width, f.precision);
 	if ((f.flags & 16) && ft_isdigit(*str) && !(res = 0))
 		f.width--;
+	//printf("width = %d, precision = %d\n", f.width, f.precision);
 	if (f.flags & 8)
 		f.width--;
-	f.precision -= f.width;
+	//printf("width = %d, precision = %d\n", f.width, f.precision);
+	f.precision += f.width;
 	f.width -= f.precision;
-	if (f.flags & 32)
+	//printf("width = %d, precision = %d\n", f.width, f.precision);
+	if (!(f.flags & 32))
 		while (f.width-- > 0)
 			ft_write(&c, 1, &res);
+	//printf("width = %d, precision = %d\n", f.width, f.precision);
 	if ((f.flags & 16) && ft_isdigit(*str))
 		ft_write("+", 1, &res);
 	if (f.flags & 8)
 		ft_write(" ", 1, &res);
 	while (f.precision-- > 0)
 		ft_write("0", 1, &res);
+	//printf("width = %d, precision = %d\n", f.width, f.precision);
 	ft_write(str, len, &res);
 	while (f.width-- > 0)
 		ft_write(&c, 1, &res);
+	//printf("width = %d, precision = %d\n", f.width, f.precision);
 	return (res);
 }
