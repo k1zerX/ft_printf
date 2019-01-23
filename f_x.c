@@ -6,18 +6,18 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 22:33:48 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/01/23 17:08:43 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 19:13:40 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*ft_itoa_base_x(int n, int base)
+static char	*ft_itoa_base_x(long long int n, int base)
 {
 	char	*res;
 	char	*b;
-	int		i;
-	int		tmp;
+	long long int		i;
+	long long int		tmp;
 	int		sign;
 
 	b = "0123456789abcdef";
@@ -47,6 +47,8 @@ char	*f_x(va_list ap)
 	char			*int_num;
 
 	integer = va_arg(ap, long long int);
-	int_num = ft_itoa_base_x((long long int)integer, 16);
+	//if (integer < 0)
+	//	integer += 2147483647;
+	int_num = ft_itoa_base_x(integer, 16);
 	return (int_num);
 }
