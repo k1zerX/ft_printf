@@ -6,7 +6,7 @@
 #    By: kbatz <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 17:33:15 by kbatz             #+#    #+#              #
-#    Updated: 2019/01/17 17:43:58 by krakharo         ###   ########.fr        #
+#    Updated: 2019/01/23 16:43:20 by kbatz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ PRJNAME = libft
 NAME = $(PRJNAME).a
 HDR = $(PRJNAME).h
 HDRDIR = ./
-SRCS =	ft_atoi.c ft_btree_bfs.c ft_btree_infix.c ft_btree_insert.c			\
+SRC =	ft_atoi.c ft_btree_bfs.c ft_btree_infix.c ft_btree_insert.c			\
 		ft_btree_new.c ft_btree_prefix.c ft_btree_suffix.c ft_bzero.c		\
 		ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c	\
 		ft_itoa.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c ft_lstiter.c		\
@@ -31,30 +31,30 @@ SRCS =	ft_atoi.c ft_btree_bfs.c ft_btree_infix.c ft_btree_insert.c			\
 		ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c ft_strtrim.c		\
 		ft_tolower.c ft_toupper.c ft_min.c ft_max.c get_next_line.c			\
 		ft_itoa_base.c ft_new_elem.c
-OBJS = $(SRCS:%.c=%.o)
-OBJSDIR = .objs/
-FLAGS = -Wall -Wextra -Werror
+OBJ = $(SRC:%.c=%.o)
+OBJDIR = .obj/
+FLAG = -Wall -Wextra -Werror
 
-vpath %.o $(OBJSDIR)
+vpath %.o $(OBJDIR)
 
 all: $(NAME)
 
-$(NAME): $(OBJSDIR) $(OBJS)
-	ar rc $(NAME) $(addprefix $(OBJSDIR), $(OBJS))
+$(NAME): $(OBJDIR) $(OBJ)
+	ar rc $(NAME) $(addprefix $(OBJDIR), $(OBJ))
 
-$(OBJS): %.o: %.c $(addprefix $(HDRDIR),$(HDR))
-	gcc $(FLAGS) -c -I$(HDRDIR) $< -o $(OBJSDIR)$@
+$(OBJ): %.o: %.c $(addprefix $(HDRDIR),$(HDR))
+	gcc $(FLAG) -c -I$(HDRDIR) $< -o $(OBJDIR)$@
 
 clean:
-	rm -Rf $(OBJSDIR)
+	rm -Rf $(OBJDIR)
 
 fclean: clean
 	rm -Rf $(NAME)
 
 re: fclean all
 
-$(OBJSDIR):
-	mkdir $(OBJSDIR)
+$(OBJDIR):
+	mkdir $(OBJDIR)
 
 norm:
 	norminette *.c *.h

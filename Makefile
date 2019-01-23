@@ -6,7 +6,7 @@
 #    By: kbatz <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/25 21:10:51 by kbatz             #+#    #+#              #
-#    Updated: 2019/01/23 16:27:48 by kbatz            ###   ########.fr        #
+#    Updated: 2019/01/23 16:43:46 by kbatz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,9 +42,7 @@ vpath %.o $(OBJDIR)
 all: $(addsuffix .all,$(LIB)) $(NAME)
 
 $(NAME): $(OBJDIR) $(OBJ)
-	echo $(SRC)
-	echo $(OBJ)
-	ar rc $(NAME) $(addprefix $(OBJDIR),$(OBJ)) $(LIBDIR)$(LIB).a
+	ar rc $(NAME) $(addprefix $(OBJDIR),$(OBJ)) $(wildcard $(LIBDIR)$(OBJDIR)*)
 
 $(OBJ): %.o: %.c $(HDR)
 	gcc $(CFLAG) $(IFLAG) -c $< -o $(OBJDIR)$@
@@ -69,7 +67,7 @@ norm:
 
 t: all $(TEST)
 	#gcc $(addprefix $(OBJDIR), $(OBJ)) -o run $(IFLAG) $(LFLAG)
-	gcc -o run $(IFLAG) $(LFLAG) -L./ -lftprintf
+	gcc -o run $(IFLAG) -L./ -lftprintf
 	./run
 
 $(TEST): %:

@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 22:33:48 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/01/21 21:31:46 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 17:08:43 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*f_x(va_list ap)
 	long long int	integer;
 	char			*int_num;
 
-	integer = va_arg(ap, int);
-	int_num = ft_itoa_base_x((int)integer, 16);
+	integer = va_arg(ap, long long int);
+	int_num = ft_itoa_base_x((long long int)integer, 16);
 	return (int_num);
 }

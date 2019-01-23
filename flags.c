@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 17:02:41 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/23 15:29:22 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 18:12:25 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,36 +73,39 @@ int			ft_print(t_format f, char *str)
 	int		len;
 	char	c;
 
-	len = ft_strlen(str);
 	c = f.flags & 64 ? '0' : ' ';
 	//printf("%d\n", f.flags);
 	//printf("111111width = %d, precision = %d\n", f.width, f.precision);
-	f.precision -= f.width;
+	res = 0;
+	//f.precision -= f.width;
+	len = ft_strlen(str);
 	f.width -= len;
 	//printf("width = %d, precision = %d\n", f.width, f.precision);
-	if ((f.flags & 16) && ft_isdigit(*str) && !(res = 0))
+	if ((f.flags & 16) && ft_isdigit(*str))
 		f.width--;
 	//printf("width = %d, precision = %d\n", f.width, f.precision);
-	if (f.flags & 8)
+	if ((f.flags & 8) && ft_isdigit(*str))
 		f.width--;
 	//printf("width = %d, precision = %d\n", f.width, f.precision);
 	f.precision += f.width;
-	f.width -= f.precision;
 	//printf("width = %d, precision = %d\n", f.width, f.precision);
-	if (!(f.flags & 32))
+	if (!(f.flags & 32) && !(f.flags & 64))
 		while (f.width-- > 0)
-			ft_write(&c, 1, &res);
+			ft_write(" ", 1, &res);
 	//printf("width = %d, precision = %d\n", f.width, f.precision);
 	if ((f.flags & 16) && ft_isdigit(*str))
 		ft_write("+", 1, &res);
-	if (f.flags & 8)
+	if ((f.flags & 8) && ft_isdigit(*str))
 		ft_write(" ", 1, &res);
-	while (f.precision-- > 0)
-		ft_write("0", 1, &res);
+	if (!(f.flags & 32) && (f.flags & 64))
+		while (f.width-- > 0)
+			ft_write("0", 1, &res);
+	//while (f.precision-- > 0)
+	//	ft_write("0", 1, &res);
 	//printf("width = %d, precision = %d\n", f.width, f.precision);
 	ft_write(str, len, &res);
 	while (f.width-- > 0)
-		ft_write(&c, 1, &res);
+		ft_write(" ", 1, &res);
 	//printf("width = %d, precision = %d\n", f.width, f.precision);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:20:44 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/23 16:19:41 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 17:33:03 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void    print_bits(void *a, unsigned long size);
 t_conv			g_conv[] =
 {
 	{'c', &f_c},
-	{'s', &f_s},/*
-	{'p', &f_p},*/
+	{'s', &f_s},
+	{'p', &f_x},
 	{'d', &f_di},
 	{'i', &f_di},
 	{'o', &f_o},/*
@@ -71,7 +71,10 @@ int		ft_printf(const char *restrict str, ...)
 			str += len + 1;
 		}
 		else
+		{
+			res++;
 			write(1, str - 1, 1);
+		}
 	}
 	va_end(ap);
 	return (res);
