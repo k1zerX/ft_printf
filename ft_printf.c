@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:20:44 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/22 17:43:40 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/22 18:00:59 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,17 @@ int		ft_printf(const char *restrict str, ...)
 			len = -1;
 			while (str[++len])
 			{
+				//printf("{\'%c\'}", str[len]);
 				i = -1;
 				while (g_conv[++i].conv)
 				{
+					printf("| %c -> %c |\n", str[len], g_conv[i].conv);
 					if (g_conv[i].conv == str[len])
 						//res += g_conv[i].f(ap, str, len);
 						res += ft_print(format(ap, str, len), g_conv[i].f(ap));
 					//printf("%c", str[len]);
 				}
-				if (!g_conv[i].conv)
+				if (g_conv[i].conv)
 					break ;
 			}
 			str += len + 1;
@@ -73,10 +75,10 @@ int		ft_printf(const char *restrict str, ...)
 
 int		main(void)
 {
-	ft_printf("%d\n", 3);/*
-	ft_printf("%f", -7.0);
-	ft_printf("%f", -15.0);
-	ft_printf("%f", -31.0);
-	ft_printf("%f", -63.0);*/
+	ft_printf("%d\n\n\n", 3);/*
+	ft_printf("%+d\n\n\n", -3);
+	ft_printf("%-d\n\n\n", -15);
+	ft_printf("%0d\n\n\n", 29);
+	ft_printf("% d\n\n\n", -163);*/
 	return (0);
 }
