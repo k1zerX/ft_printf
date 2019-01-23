@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 17:02:41 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/23 19:20:29 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/23 19:53:07 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ t_format	format(va_list ap, const char *restrict format, int len)
 	ft_bzero(&f, sizeof(f));
 	while (len-- > 0)
 	{
-		if (*format == '.')
+		if (*format == '#')
+			f.flags |= 1 << 7;
+		else if (*format == '.')
 		{
 			format++;
 			len--;
@@ -79,6 +81,10 @@ int			ft_print(t_format f, char *str)
 	len = ft_strlen(str);
 	if (f.precision < len)
 		f.precision = len;
+	if (f.width < f.precision)
+	{
+		f.width = f.precision;
+	}
 	//printf("%d\n", f.flags);
 	//printf("111111width = %d, precision = %d\n", f.width, f.precision);
 	f.width -= f.precision;
