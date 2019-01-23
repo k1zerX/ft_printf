@@ -6,19 +6,19 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 22:33:48 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/01/23 19:19:34 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/01/23 20:00:43 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*ft_itoa_base_x(long long int n, int base)
+static char	*ft_itoa_base_x(unsigned long long int n, int base)
 {
-	char	*res;
-	char	*b;
-	long long int		i;
-	long long int		tmp;
-	int		sign;
+	char			*res;
+	char			*b;
+	long long int	i;
+	long long int	tmp;
+	int				sign;
 
 	b = "0123456789abcdef";
 	tmp = n;
@@ -26,11 +26,11 @@ static char	*ft_itoa_base_x(long long int n, int base)
 	sign = 1;
 	while (tmp != 0)
 		tmp = tmp / base + (i++) * 0;
-	if ((n < 0 && base == 10) || (n == 0))
+	if (base == 10 || (n == 0))
 		i++;
 	if (!(res = (char*)malloc(sizeof(char) * i)))
 		return (0);
-	if (n < 0 && (sign = -1) && base == 10)
+	if (sign == -1 && base == 10)
 		res[0] = '-' + (tmp++) * 0;
 	res[--i] = '\0';
 	while (i > tmp)
@@ -43,10 +43,10 @@ static char	*ft_itoa_base_x(long long int n, int base)
 
 char	*f_x(va_list ap)
 {
-	long long int	integer;
-	char			*int_num;
+	unsigned long long int	integer;
+	char					*int_num;
 
-	integer = va_arg(ap, long long int);
+	integer = va_arg(ap, unsigned long long int);
 	int_num = ft_itoa_base_x(integer, 16);
 	return (int_num);
 }
