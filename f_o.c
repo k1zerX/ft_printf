@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 22:30:06 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/01/24 15:52:21 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/01/24 15:55:50 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*f_o(va_list ap, t_format f)
 		return (ft_itoa_base(va_arg(ap, long int), 8));
 	else if(f.type == 2)
 		return (ft_itoa_base(va_arg(ap, long long int), 8));
-	else if(f.type == -1)//h
+	else if(f.type == -1)
 		return (ft_itoa_base(va_arg(ap, short int), 8));
-	else if(f.type == -2)//hh
+	else if(f.type == -2)
 		return (ft_itoa_base(va_arg(ap, char), 8));
 }

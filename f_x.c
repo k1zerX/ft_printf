@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 22:33:48 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/01/24 15:51:57 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/01/24 16:02:47 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,17 @@ static char	*ft_itoa_base_x(unsigned long long int n, int base)
 
 char	*f_x(va_list ap, t_format f, int len)
 {
-	unsigned long long int	integer;
-	char					*str;
-
-
-	if ((f.flags & 128))
-	//0000
+	//if +
+	if(f.width > len && (f.flags & 64) && f.width > len + 2 * ((f.flags & 128) > 0))
 	{
-		if(f.width > len && (f.flags & 64) && f.width > len + 2 * ((f.flags & 128) > 0))
-
-		else if (f.precision > len + 2 * ((f.flags & 128) > 0))
+		len--;
+		f.width--;
 	}
+	else if (f.precision > len + 2 * ((f.flags & 128) > 0))
+	{
+
+	}
+	//
 	if(f.type == 0)
 		return (ft_itoa_base(va_arg(ap, int), 8));
 	else if(f.type == 1)
@@ -61,8 +61,8 @@ char	*f_x(va_list ap, t_format f, int len)
 	else if(f.type == 2)
 		return (ft_itoa_base(va_arg(ap, long long int), 8));
 	else if(f.type == -1)//h
-		return (ft_itoa_base(va_arg(ap, int), 8));
+		return (ft_itoa_base(va_arg(ap, short int), 8));
 	else if(f.type == -2)//hh
-		return (ft_itoa_base(va_arg(ap, int), 8));
+		return (ft_itoa_base(va_arg(ap, char), 8));
 
 }
