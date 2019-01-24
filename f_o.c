@@ -6,26 +6,24 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 22:30:06 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/01/23 20:26:28 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/01/24 15:52:21 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*f_o(va_list ap, t_format format)
+char	*f_o(va_list ap, t_format f)
 {
-	long long int	integer;
-	char			*int_num;
+	if ((f.flags & 128))
 
-	if (format.flags ==)
-	if(format.type == 0)
+	if(f.type == 0)
 		return (ft_itoa_base(va_arg(ap, int), 8));
-	else if(format.type == 1)
+	else if(f.type == 1)
 		return (ft_itoa_base(va_arg(ap, long int), 8));
-	else if(format.type == 2)
+	else if(f.type == 2)
 		return (ft_itoa_base(va_arg(ap, long long int), 8));
-	else if(format.type == -1)//h
-		return (ft_itoa_base(va_arg(ap, int), 8));
-	else if(format.type == -2)//hh
-		return (ft_itoa_base(va_arg(ap, int), 8));
+	else if(f.type == -1)//h
+		return (ft_itoa_base(va_arg(ap, short int), 8));
+	else if(f.type == -2)//hh
+		return (ft_itoa_base(va_arg(ap, char), 8));
 }
