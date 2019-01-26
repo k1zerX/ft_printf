@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 22:33:48 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/01/24 16:39:34 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/01/26 17:43:25 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,15 @@ static char	*ft_itoa_base_x(unsigned long long int n, int base)
 
 char	*f_x(va_list ap, t_format f, int len)
 {
-	//if #
 	if(f.width > len && (f.flags & 64) && f.width > len + 2 * ((f.flags & 128) > 0))
 	{
-		len--;
-		ignor width
+		f.width -= 2;
+		len += 2;
 	}
 	else if (f.precision > len + 2 * ((f.flags & 128) > 0))
 	{
-		00000
+		len += 2;
 	}
-	//
 	if(f.type == 0)
 		return (ft_itoa_base(va_arg(ap, int), 8));
 	else if(f.type == 1)
