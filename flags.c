@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 17:02:41 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/23 20:26:30 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/26 19:48:58 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_format	format(va_list ap, const char *restrict format, int len)
 	t_format	f;
 
 	ft_bzero(&f, sizeof(f));
+	f.precision = -1;
 	while (len-- > 0)
 	{
 		if (*format == '#')

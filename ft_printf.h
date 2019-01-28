@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:39:27 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/23 20:23:44 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/01/26 19:48:49 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdarg.h>
 # include <libc.h>
 # include "libft.h"
+
+# define LOG_PR 0.000001
+# define LOG_ADD_PR 1000000
 
 typedef struct	s_conv
 {
