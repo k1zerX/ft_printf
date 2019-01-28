@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 19:33:54 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/28 21:14:24 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/01/28 21:45:39 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*f_f(va_list ap)
 	sign = d & 0x8000000000000000;
 	d &= 0x000fffffffffffff;
 	d |= 0x0010000000000000;
+	len = count_flen(d, p);
 	if (sign)
 		d = (~d) + 1;
 	if (p < 0)
@@ -88,7 +89,6 @@ char	*f_f(va_list ap)
 	}
 	else
 		f = 0;
-	len = count_flen(f, p);
 	len_f = len - (p < 0 ? p : 0);
 	p = p > 0 ? p : 0;
 	len_d = (p + len) * 0.30103;
