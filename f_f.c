@@ -6,94 +6,103 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 19:33:54 by kbatz             #+#    #+#             */
-/*   Updated: 2019/01/28 21:45:39 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/02/12 21:10:18 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	count_flen(unsigned long long int a, int p)
+int		count_len(unsigned long long int a)
 {
-	size_t	i;
+	int		i;
 
-	p = p > 0 ? p : 0;
 	i = -1;
-	while (++i < 53 - p)
-	{
-		if (a & (1 << i))
-			break;
-	}
-	return (53 - p - i);
+	while (1)
+		if (a & (1 << ++i))
+			return (53 - i);
+	return (0);
 }
 
-char	*get_str(unsigned long long int a, int p, size_t n, size_t len)
+void	ft_mul(char *str, size_t len, int a)
 {
-	char	*str;
-	size_t	i;
+	int		prev;
+	int		buf;
 	size_t	j;
 
-	str = ft_memalloc(p);
-	i = -1;
-	while (++i < n)
+	buf = 0;
+	j = len;
+	while (--j > 0)
 	{
-		j = len + 1;
-		while (--j > 0)
-		{
-			buf = (str[j] - '0') / 10;
-			str[j] -= buf * 10;
-			str[j - 1] += buf;
-		}
-		j = len + 1;
-		while (--j > 0)
-			str[j] *= p;
-		str[0] *= p
+		str[j] = str[j] * a + buf;
+		buf = (str[j] - '0') / 10;
+		str[j] -= buf * 10;
 	}
-	return (str);
+}
+
+/* ispravit' dliny i zaranee perevesti mantisu v strokovoe chislo */
+
+void	get_f(unsigned long long int a, char *str, size_t len, int p)
+{
+	while (p++ < 0)
+		ft_mul(str, len, 5);
+}
+
+void	get_i(unsigned long long int a, char *str, size_t len, int p)
+{
+	while (p-- > 0)
+		ft_mul(str, len, 2);
 }
 
 char	*f_f(va_list ap)
 {
 	double					a;
 	char					*str;
-	char					*str_d;
-	char					*str_f;
 	int						p;
-	unsigned long long int	d;
+	unsigned long long int	i;
 	unsigned long long int	f;
 	char					sign;
-	size_t					len_d;
 	size_t					len_f;
+	double					len_i;
 	size_t					len;
 
-	len = 0;
 	a = va_arg(ap, double);
-	//printf("%.0f =\t", a);
-	//print_bits(&a, 8);
-	d = *(long long int *)&a;
-	p = (d & 0x7ff0000000000000) - 1023;
-	sign = d & 0x8000000000000000;
-	d &= 0x000fffffffffffff;
-	d |= 0x0010000000000000;
-	len = count_flen(d, p);
+	i = *(unsigned long long int *)&a;
+	p = (i & 0x7ff0000000000000) - 1023;
+	sign = i & 0x8000000000000000;
+	i &= 0x000fffffffffffff;
+	i |= 0x0010000000000000;
 	if (sign)
-		d = (~d) + 1;
+		i = (~i) + 1;
 	if (p < 0)
 	{
-		f = d;
-		d = 0;
+		f = i;
+		i = 0;
+		len_f = count_len(f) - p;
+		len_i = 0;
 	}
 	else if (p < 52)
 	{
-		f = d & (0x001fffffffffffff >> p);
-		d >>= (52 - p);
+		f = (i << (p + 1)) & 0x001fffffffffffff;
+		i &= (0xffffffffffffffff << (52 - p));
+		len_f = count_len(f);
+		len_i = (count_len(i) + p) * 0.30103;
 	}
 	else
+	{
 		f = 0;
-	len_f = len - (p < 0 ? p : 0);
-	p = p > 0 ? p : 0;
-	len_d = (p + len) * 0.30103;
-	len = len_f + len_d + 1 + sign;
-	str_d = get_str(d, 2, p, len_d);
-	str_f = get_str(f, 5, len_f, len_f);
+		len_f = 0;
+		len_i = (count_len(i) + p) * 0.30103;
+	}
+	i >>= 53 - len_i;
+	++len_i;
+	if (f)
+		++len_f;
+	len = len_f + (size_t)len_i + (len_i - (size_t)len_i > 0);
+	str = malloc(sizeof(*str) * (len + 1));
+	str[len] = 0;
+	if (f)
+		str[len_i] = '.';
+	get_i(i, str, len_i, p);
+	get_f(i, str + len_i + 1, p);
 	return (0);
 }
