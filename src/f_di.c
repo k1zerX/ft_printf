@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 19:25:18 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/16 21:32:51 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/07/16 22:16:28 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_strfill(char *str, char *nbr, t_format f, int len)
 
 	c = (f.zero) ? ('0') : (' ');
 	i = 0;
-	if (!f.minus)
+	if (!f.minus && !f.zero)
 		while (i < f.width - f.precision)
 			str[i++] = c;
 	j = i;
@@ -38,9 +38,14 @@ void	ft_strfill(char *str, char *nbr, t_format f, int len)
 	{
 		str[j++] = *(nbr++);
 		--len;
+		if (f.zero)
+			++i;
 	}
 	else if (f.plus)
 		str[j++] = '+';
+	if (!f.minus && f.zero)
+		while (i < f.width - f.precision)
+			str[i++] = c;
 	while (j < f.precision - len + i)
 		str[j++] = '0';
 	while (--len >= 0)
@@ -68,11 +73,14 @@ int		f_di(va_list ap, t_format f)
 		n = (long long int)n;
 	else
 		n = (int)n;
-	f.zero = (f.precision) ? (0) : (f.zero);
+	if (f.minus)
+		f.zero = 0;
+	f.zero = (f.precision != -1) ? (0) : (f.zero);
 	nbr = ft_itoa_base(n, 10, "0123456789");
 	len = ft_strlen(nbr);
 	f.precision = (len > f.precision) ? (len) : (f.precision);
-	f.precision += f.plus || (n < 0);
+	f.precision += f.plus && (n >= 0);
+//	printf("%d %d %d\n", f.width, f.precision, len);
 	f.width = (f.width > f.precision) ? (f.width) : (f.precision);
 	if (!(str = malloc((f.width + 1) * sizeof(*str))))
 		exit(1);
