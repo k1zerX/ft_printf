@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:20:44 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/16 20:55:51 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/07/16 20:32:52 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		ft_printf(const char *restrict str, ...)
 	int			i;
 	int			len;
 	int			res;
+	t_format	f;
 
 	va_start(ap, str);
 	res = 0;
@@ -50,7 +51,7 @@ int		ft_printf(const char *restrict str, ...)
 				{
 					if (g_conv[i].conv == str[len])
 					{
-						res += (*g_conv[i].f)(ap, format(str, len));
+						res += g_conv[i].(*f)(ap, format(str, len));
 						break ;
 					}
 				}

@@ -6,16 +6,16 @@
 #    By: kbatz <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/25 21:10:51 by kbatz             #+#    #+#              #
-#    Updated: 2019/01/23 16:43:46 by kbatz            ###   ########.fr        #
+#    Updated: 2019/07/16 20:51:30 by kbatz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libftprintf.a
-LIB		= libft
+LIB		= #libft
 
 # **************************************************************************** #
 
-SRCDIR	= ./
+SRCDIR	= src/
 OBJDIR	= .obj/
 HDRDIR	= ./
 TESTDIR	= test/
@@ -24,7 +24,7 @@ TESTDIR	= test/
 
 LIBDIR	= $(addsuffix /,$(LIB))
 LHD		= $(LIBDIR)
-SRC		= $(patsubst $(SRCDIR)%,%,$(wildcard $(SRCDIR)*.c))
+SRC		= $(patsubst $(SRCDIR)%,%,$(wildcard $(SRCDIR)*.c)) main.c
 OBJ		= $(SRC:%.c=%.o)
 HDR		= $(wildcard $(HDRDIR)*.h)
 TEST	= $(patsubst $(TESTDIR),%,$(wildcard $(TESTDIR)*))
@@ -66,8 +66,8 @@ norm:
 	norminette $(addprefix $(HDRDIR), $(HDR))
 
 t: all $(TEST)
-	#gcc $(addprefix $(OBJDIR), $(OBJ)) -o run $(IFLAG) $(LFLAG)
-	gcc -o run $(IFLAG) -L./ -lftprintf
+	gcc $(addprefix $(OBJDIR), $(OBJ)) -o run $(IFLAG) $(LFLAG)
+	#gcc -o run $(IFLAG) -L./ -lftprintf
 	./run
 
 $(TEST): %:
