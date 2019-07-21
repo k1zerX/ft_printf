@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   f_c.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/16 18:21:43 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/22 00:20:36 by kbatz            ###   ########.fr       */
+/*   Created: 2019/07/21 23:09:42 by kbatz             #+#    #+#             */
+/*   Updated: 2019/07/22 00:13:19 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <libc.h>
 #include "ft_printf.h"
 
-#define TEST1 "%%heo %s %d sgdds\n", "world", 77
-
-char    *ft_itoa_base(int nbr, int base, const char *digits);
-
-int		main()
+int f_c(va_list ap, t_format f)
 {
-	int		a;
-	int		b;
+	char	c;
+	char	*str;
 
-	printf("-\n");
-	a = ft_printf(TEST1);
-	printf("+\n");
-	b = printf(TEST1);
-	if (a == b)
-		printf("true\n");
-	else
-		printf("false: %d vs %d\n", a, b);
-	return (0);
+	c = va_arg(ap, int);
+	if (f.minus)
+		f.zero = 0;
+	if (--f.width < 0)
+		f.width = 0;
+	if (!(str = malloc((f.width + 2) * sizeof(*str))))
+		exit(1);
+	ft_strfill(str, &c, f, 1);
+	write(1, str, f.width + 1);
+	free(str);
+	return (f.width + 1);
 }

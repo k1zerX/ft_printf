@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 17:06:08 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/21 22:05:15 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/07/22 00:13:20 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	ft_intfill(char *str, char *nbr, t_format f, int len)
 	int		i;
 	int		j;
 
+	str[f.width + f.precision + len] = 0;
 	j = 0;
 	i = -1;
 	if (!f.minus && !f.zero)
@@ -107,6 +108,28 @@ void	ft_intfill(char *str, char *nbr, t_format f, int len)
 	if (f.minus)
 		while (++i < f.width)
 			str[j++] = ' ';
+}
+
+void	ft_strfill(char *str, char *s, t_format f, int len)
+{
+	int		i;
+	int		j;
+	char	c;
+
+	str[f.width + len] = 0;
+	c = (f.zero) ? ('0') : (' ');
+	j = 0;
+	i = -1;
+	if (!f.minus)
+		while (++i < f.width)
+			str[j++] = c;
+	i = -1;
+	while (++i < len)
+		str[j++] = *(s++);
+	i = -1;
+	if (f.minus)
+		while (++i < f.width)
+			str[j++] = c;
 }
 
 t_format	format(const char *restrict format, int len)

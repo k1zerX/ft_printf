@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:39:27 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/21 22:24:59 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/07/22 00:13:21 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,12 @@ typedef struct	s_conv
 char		*ft_ultra_itoa(long long int n, int base, char is_signed, const char *digits);
 t_format	format(const char *restrict format, int len);
 void		ft_intfill(char *str, char *nbr, t_format f, int len);
+void		ft_strfill(char *str, char *s, t_format f, int len);
 int			ft_strlen(char *str);
+int			ft_ascii(char *s, t_format f);
+int			f_percent(va_list ap, t_format f);
+int			f_s(va_list ap, t_format f);
+int			f_c(va_list ap, t_format f);
 int			f_p(va_list ap, t_format f);
 int			f_d(va_list ap, t_format f);
 int			f_i(va_list ap, t_format f);

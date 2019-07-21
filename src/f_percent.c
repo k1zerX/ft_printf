@@ -1,40 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_s.c                                              :+:      :+:    :+:   */
+/*   f_percent.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/21 17:02:28 by etuffleb          #+#    #+#             */
+/*   Created: 2019/07/22 00:02:13 by kbatz             #+#    #+#             */
 /*   Updated: 2019/07/22 00:13:22 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
 #include "ft_printf.h"
 
-int f_s(va_list ap, t_format f)
+int f_percent(va_list ap, t_format f)
 {
-	char	*s;
 	char	*str;
-	int		len;
 
-	s = va_arg(ap, char *);
-	if (!s)
-		s = "(null)";
-	len = ft_strlen(s);
+	(void)ap;
 	if (f.minus)
 		f.zero = 0;
-	if (f.precision != -1 && f.precision < len)
-		len = f.precision;
-	f.width -= len;
-	if (f.width < 0)
+	if (--f.width < 0)
 		f.width = 0;
-	if (!(str = malloc((f.width + len + 1) * sizeof(*str))))
+	if (!(str = malloc((f.width + 2) * sizeof(*str))))
 		exit(1);
-	ft_strfill(str, s, f, len);
-	write(1, str, f.width + len);
+	ft_strfill(str, "%", f, 1);
+	write(1, str, f.width + 1);
 	free(str);
-	return (f.width + len);
+	return (f.width + 1);
 }
