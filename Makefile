@@ -6,7 +6,7 @@
 #    By: kbatz <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/25 21:10:51 by kbatz             #+#    #+#              #
-#    Updated: 2019/07/16 20:51:30 by kbatz            ###   ########.fr        #
+#    Updated: 2019/07/21 20:52:37 by kbatz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIB		= #libft
 
 SRCDIR	= src/
 OBJDIR	= .obj/
-HDRDIR	= ./
+HDRDIR	= include/
 TESTDIR	= test/
 
 # **************************************************************************** #
@@ -66,8 +66,8 @@ norm:
 	norminette $(addprefix $(HDRDIR), $(HDR))
 
 t: all $(TEST)
-	gcc $(addprefix $(OBJDIR), $(OBJ)) -o run $(IFLAG) $(LFLAG)
-	#gcc -o run $(IFLAG) -L./ -lftprintf
+	#gcc $(addprefix $(OBJDIR), $(OBJ)) -o run $(IFLAG) $(LFLAG)
+	gcc -o run $(IFLAG) -L./ -lftprintf
 	./run
 
 $(TEST): %:

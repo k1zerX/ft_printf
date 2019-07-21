@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 17:06:08 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/16 22:12:53 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/07/21 22:05:15 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	ft_isdigit(char c)
 	return (c >= '0' && c <= '9');
 }
 
-int		itoa_len(long int nbr, int base)
+int		itoa_len(unsigned long long int nbr, int base)
 {
 	int		len;
 
@@ -27,28 +27,26 @@ int		itoa_len(long int nbr, int base)
 	return (len);
 }
 
-char	*ft_itoa_base(int n, int base, const char *digits)
+char	*ft_ultra_itoa(long long int n, int base, char is_signed, const char *digits)
 {
-	char		*str;
-	int			len;
-	char		sign;
-	long int	nbr;
+	char					*str;
+	int						len;
+	char					sign;
+	unsigned long long int	nbr;
 
 	if (base < 2)
 		return (NULL);
-	if ((sign = ((base == 10) && (n < 0))))
-		nbr = n;
+	if (is_signed && (sign = n < 0))
+		nbr = ~(unsigned long long int)n + 1;
 	else
-		nbr = (unsigned int)n;
-	len = itoa_len(nbr, base);
-	if ((str = malloc(((len += sign) + 1) * sizeof(*str))))
+		nbr = n;
+//	printf("%llu %lld", nbr, n);
+	len = itoa_len(nbr, base) + 1;
+	if ((str = malloc((len + 1) * sizeof(*str))))
 	{
 		str[len] = 0;
-		if (sign)
-			str[0] = '-';
-		str[--len] = digits[sign ? -(nbr % base) : nbr % base];
-		if (sign)
-			nbr *= -1;
+		str[0] = (sign) ? ('-') : ('+');
+		str[--len] = digits[nbr % base];
 		while ((nbr /= base) > 0)
 			str[--len] = digits[nbr % base];
 	}
@@ -71,6 +69,44 @@ void		ft_bzero(void *ptr, size_t size)
 {
 	while (size--)
 		*(unsigned char *)(ptr++) = 0;
+}
+
+int     ft_strlen(char *str)
+{
+	char	*start;
+	
+	start = str;
+	while (*str)
+		++str;
+	return (str - start);
+}
+
+void	ft_intfill(char *str, char *nbr, t_format f, int len)
+{
+	int		i;
+	int		j;
+
+	j = 0;
+	i = -1;
+	if (!f.minus && !f.zero)
+		while (++i < f.width)
+			str[j++] = ' ';
+	if (f.plus)
+		str[j++] = *nbr;
+	i = -1;
+	if (!f.minus && f.zero)
+		while (++i < f.width)
+			str[j++] = '0';
+	i = -1;
+	while (++i < f.precision)
+		str[j++] = '0';
+	i = -1;
+	while (++i < len)
+		str[j++] = *(++nbr);
+	i = -1;
+	if (f.minus)
+		while (++i < f.width)
+			str[j++] = ' ';
 }
 
 t_format	format(const char *restrict format, int len)
