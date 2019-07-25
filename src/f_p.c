@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 22:24:37 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/21 22:59:48 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/07/25 18:56:52 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ int		f_p(va_list ap, t_format f)
 	int						len;
 
 	n = va_arg(ap, unsigned long long int);
-	if (f.type == FT_HH)
-		n = (unsigned char)n;
-	else if (f.type == FT_H)
-		n = (unsigned short int)n;
-	else if (f.type == FT_L)
-		n = (unsigned long int)n;
-	else if (f.type == FT_LL)
-		n = (unsigned long long int)n;
-	else
-		n = (unsigned int)n;
 	if (f.minus)
 		f.zero = 0;
 	if (f.zero)

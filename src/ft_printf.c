@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:20:44 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/22 00:22:20 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/07/25 18:32:33 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int		ft_printf(const char *restrict str, ...)
 	{
 		if (*str++ == '%')
 		{
-			write(1, start, len);
+			if (!*str)
+				break;
+			if (len > 0)
+				write(1, start, len);
 			res += len;
 			len = -1;
 			while (str[++len])
@@ -64,6 +67,7 @@ int		ft_printf(const char *restrict str, ...)
 			}
 			str += len + 1;
 			start = (char *)str;
+			len = 0;
 		}
 		else
 			++len;
