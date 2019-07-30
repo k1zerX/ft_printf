@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:39:27 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/22 00:13:21 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/07/31 00:15:04 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@
 #define FT_L	1
 #define FT_LL	2
 
-typedef struct	s_format
+typedef struct		s_format
 {
-	unsigned	sharp : 1;
-	unsigned	zero : 1;
-	unsigned	minus : 1;
-	unsigned	plus : 1;
-	unsigned	space : 1;
-	int			width;
-	int			precision;
-	char		type;
-}				t_format;
+	unsigned char	sharp : 1;
+	unsigned char	zero : 1;
+	unsigned char	minus : 1;
+	unsigned char	plus : 1;
+	unsigned char	space : 1;
+	int				width;
+	int				precision;
+	char			type;
+}					t_format;
 
-typedef struct	s_conv
+typedef struct		s_conv
 {
-	char		conv;
-	int			(*f)(va_list ap, t_format f);
-}				t_conv;
+	char			conv;
+	int				(*f)(va_list ap, t_format f);
+}					t_conv;
 
 char		*ft_ultra_itoa(long long int n, int base, char is_signed, const char *digits);
 t_format	format(const char *restrict format, int len);
@@ -55,6 +55,7 @@ int			f_o(va_list ap, t_format f);
 int			f_u(va_list ap, t_format f);
 int			f_x(va_list ap, t_format f);
 int			f_big_x(va_list ap, t_format f);
+int			f_f(va_list ap, t_format f);
 int			ft_printf(const char *restrict str, ...);
 
 #endif
