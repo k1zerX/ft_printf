@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 16:15:28 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/08/04 18:04:07 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:18:13 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,52 +41,46 @@ char		*ft_ultra_itoa(long long int n, int base, char is_signed, \
 void		ft_intfill(char *str, char *nbr, t_format f, int len)
 {
 	int		i;
-	int		j;
 
-	str[f.width + f.precision + len] = 0;
-	j = 0;
 	i = -1;
 	if (!f.minus && !f.zero)
 		while (++i < f.width)
-			str[j++] = ' ';
+			*str++ = ' ';
 	if (f.plus)
-		str[j++] = *nbr;
+		*str++ = *nbr;
 	i = -1;
 	if (!f.minus && f.zero)
 		while (++i < f.width)
-			str[j++] = '0';
+			*str++ = '0';
 	i = -1;
 	while (++i < f.precision)
-		str[j++] = '0';
+		*str++ = '0';
 	i = -1;
 	while (++i < len)
-		str[j++] = *(++nbr);
+		*str++ = *(++nbr);
 	i = -1;
 	if (f.minus)
 		while (++i < f.width)
-			str[j++] = ' ';
+			*str++ = ' ';
 }
 
 void		ft_strfill(char *str, char *s, t_format f, int len)
 {
 	int		i;
-	int		j;
 	char	c;
 
-	str[f.width + len] = 0;
 	c = (f.zero) ? ('0') : (' ');
-	j = 0;
 	i = -1;
 	if (!f.minus)
 		while (++i < f.width)
-			str[j++] = c;
+			*str++ = c;
 	i = -1;
 	while (++i < len)
-		str[j++] = *(s++);
+		*str++ = *(s++);
 	i = -1;
 	if (f.minus)
 		while (++i < f.width)
-			str[j++] = c;
+			*str++ = c;
 }
 
 void		reformat(t_format *f, const char *restrict format)

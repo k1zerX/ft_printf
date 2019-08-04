@@ -6,13 +6,12 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:20:44 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/30 21:58:55 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/08/04 20:27:57 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
-void    print_bits(void *a, unsigned long size);
 
 t_conv			g_conv[] =
 {
@@ -30,10 +29,34 @@ t_conv			g_conv[] =
 	{0, NULL}
 };
 
+int		ft_while(va_list ap, const char *restrict *str, int *len, char **start)
+{
+	int		i;
+	int		res;
+
+	res = 0;
+	*len = -1;
+	while ((*str)[++*len])
+	{
+		i = -1;
+		while (g_conv[++i].conv)
+			if (g_conv[i].conv == (*str)[*len])
+			{
+				res += (*g_conv[i].f)(ap, format(*str, *len));
+				break ;
+			}
+		if (g_conv[i].conv)
+			break ;
+	}
+	*str += *len + 1;
+	*start = (char *)*str;
+	*len = 0;
+	return (res);
+}
+
 int		ft_printf(const char *restrict str, ...)
 {
 	va_list		ap;
-	int			i;
 	int			len;
 	int			res;
 	char		*start;
@@ -43,36 +66,17 @@ int		ft_printf(const char *restrict str, ...)
 	start = (char *)str;
 	res = 0;
 	while (*str)
-	{
 		if (*str++ == '%')
 		{
 			if (!*str)
-				break;
+				break ;
 			if (len > 0)
 				write(1, start, len);
 			res += len;
-			len = -1;
-			while (str[++len])
-			{
-				i = -1;
-				while (g_conv[++i].conv)
-				{
-					if (g_conv[i].conv == str[len])
-					{
-						res += (*g_conv[i].f)(ap, format(str, len));
-						break ;
-					}
-				}
-				if (g_conv[i].conv)
-					break ;
-			}
-			str += len + 1;
-			start = (char *)str;
-			len = 0;
+			res += ft_while(ap, &str, &len, &start);
 		}
 		else
 			++len;
-	}
 	write(1, start, len);
 	res += len;
 	va_end(ap);

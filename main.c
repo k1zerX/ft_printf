@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 18:21:43 by kbatz             #+#    #+#             */
-/*   Updated: 2019/08/04 18:14:33 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/08/04 20:20:45 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		main(int ac, char  *av[])
 	double	f;
 	int		b;
 	int		a;
+	int		i;
 
 	(void)ac;
 	(void)av;
@@ -42,11 +43,14 @@ int		main(int ac, char  *av[])
 	if (ac > 3)
 	{
 		f = (double)atoi(av[2]) / (double)atoi(av[3]);
+		i = atoi(av[2]);
 //		*(unsigned long *)&f = 0xffefffffffffffff;
-		a = printf(av[1], f);
-		printf("\n");
-		b = ft_printf(av[1], f);
-		printf("\n");
+		printf("|");
+		a = printf(av[1], f, f, f);
+		printf("|\n");
+		write(1, "|", 1);
+		b = ft_printf(av[1], f, f, f);
+		printf("|\n");
 		printf("%d vs %d\n", a, b);
 //		ft_printf("%f\n", f);
 	}

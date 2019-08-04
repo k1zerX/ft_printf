@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 22:24:37 by kbatz             #+#    #+#             */
-/*   Updated: 2019/08/04 17:01:38 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:18:06 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	p_counter(unsigned long long int n, char *nbr, int len, t_format f)
 	f.width -= f.precision + len + f.plus;
 	if (f.width < 0)
 		f.width = 0;
-	str = malloc((f.width + f.precision + len + f.plus + 1) * sizeof(*str));
+	str = malloc((f.width + f.precision + len + f.plus) * sizeof(*str));
 	if (!str)
 		exit(1);
 	ft_intfill(str, nbr, f, len);

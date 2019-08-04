@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 20:48:58 by kbatz             #+#    #+#             */
-/*   Updated: 2019/08/04 18:05:45 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:18:07 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	big_x_count(unsigned long long int n, char *nb, int len, t_format f)
 	f.width -= f.precision + len + f.plus;
 	if (f.width < 0)
 		f.width = 0;
-	str = malloc((f.width + f.precision + len + f.plus + 1) * sizeof(*str));
+	str = malloc((f.width + f.precision + len + f.plus) * sizeof(*str));
 	if (!str)
 		exit(1);
 	ft_intfill(str, nb, f, len);

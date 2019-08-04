@@ -6,18 +6,39 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 20:48:35 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/21 22:59:49 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/08/04 20:15:56 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+int		u_counter(unsigned long long int n, char *nbr, t_format f)
+{
+	int		len;
+	char	*str;
+
+	len = ft_strlen(nbr) - 1;
+	if (n == 0 && f.precision == 0)
+		len = f.precision;
+	f.precision -= len;
+	if (f.precision < 0)
+		f.precision = 0;
+	f.width -= f.precision + len + f.plus;
+	if (f.width < 0)
+		f.width = 0;
+	if (!(str = malloc((f.width + f.precision + len + f.plus) * sizeof(*str))))
+		exit(1);
+	ft_intfill(str, nbr, f, len);
+	write(1, str, f.width + f.precision + len + f.plus);
+	free(str);
+	free(nbr);
+	return (f.width + f.precision + len + f.plus);
+}
+
 int		f_u(va_list ap, t_format f)
 {
 	unsigned long long int	n;
 	char					*nbr;
-	char					*str;
-	int						len;
 
 	n = va_arg(ap, unsigned long long int);
 	if (f.type == FT_HH)
@@ -37,20 +58,5 @@ int		f_u(va_list ap, t_format f)
 	f.zero = (f.precision != -1) ? (0) : (f.zero);
 	f.plus = 0;
 	nbr = ft_ultra_itoa(n, 10, 0, "0123456789");
-	len = ft_strlen(nbr) - 1;
-	if (n == 0 && f.precision == 0)
-		len = f.precision;
-	f.precision -= len;
-	if (f.precision < 0)
-		f.precision = 0;
-	f.width -= f.precision + len + f.plus;
-	if (f.width < 0)
-		f.width = 0;
-	if (!(str = malloc((f.width + f.precision + len + f.plus + 1) * sizeof(*str))))
-		exit(1);
-	ft_intfill(str, nbr, f, len);
- 	write(1, str, f.width + f.precision + len + f.plus);
-	free(str);
-	free(nbr);
-	return (f.width + f.precision + len + f.plus);
+	return (u_counter(n, nbr, f));
 }
