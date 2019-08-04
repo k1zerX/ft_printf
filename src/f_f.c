@@ -115,15 +115,17 @@ void	apa_fill_f(char *str, unsigned long m, int len, int k)
 	int		i;
 	int		j;
 
+//	print_bits(&m, sizeof(m));
 	i = -1;
 	while (++i < len)
 		str[i] = 0;
-	i = 53;
-	while (--i >= 0)
+	i = -1;
+	while (++i < len)
 	{
-		apa_mul(5, str, len);
 		if (m & ((unsigned long)1 << i))
-			str[len - 1] += 1;
+			str[len - 1 - i] += 1;
+		apa_mul(5, str, len);
+//		test_putstr(str, len);
 	}
 	i = -1;
 	while (++i < k)
@@ -176,14 +178,15 @@ char	*apa_float(double n)
 		parts.f_len = count_len(f.parse.m) - k;
 //		if (parts.f_len < 0)
 //			parts.f_len = 0;	// ????????????????
-		parts.f = (f.parse.m << k) >> (52 - parts.i_len);
+		parts.f = (f.parse.m << k) >> (52 - parts.f_len);
+		printf("%d %d\n", k, parts.i_len);
 		k = 0;
 	}
 	il = (int)((parts.i_len /*-1 */ + ((k < 0) ? (0) : (k))) * 0.30103) + 1; // new -1
-	printf("len: %d | %ld %ld %ld |\n", il, f.parse.s, f.parse.e, f.parse.m);
+//	printf("len: %d | %ld %ld %ld |\n", il, f.parse.s, f.parse.e, f.parse.m);
 	if (!(str = malloc((1 + il + 1 + parts.f_len + 1) * sizeof(char))))
 		exit(1);
-	printf("%lu, %d, %d\n", parts.i, il, k);
+//	printf("%lu, %d, %d\n", parts.i, il, k);
 	str[0] = (f.parse.s) ? '-' : '+';
 	apa_fill_i(str + 1, parts.i, il, k);
 	str[1 + il] = '.';
