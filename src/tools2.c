@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 16:15:28 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/08/04 16:30:36 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/08/04 18:04:07 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void		ft_strfill(char *str, char *s, t_format f, int len)
 			str[j++] = c;
 }
 
-void		reformat(t_format *f)
+void		reformat(t_format *f, const char *restrict format)
 {
 	if (*format == '-')
 		f->minus = 1;
@@ -125,7 +125,7 @@ t_format	format(const char *restrict format, int len)
 			f.width = mini_atoi(&format, &len);
 		else if (*format == '-' || *format == '+' || *format == ' ' || \
 				*format == 'l' || *format == 'h')
-			reformat(&f);
+			reformat(&f, format);
 		++format;
 	}
 	return (f);

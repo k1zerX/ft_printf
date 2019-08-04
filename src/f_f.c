@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   f_f.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/04 17:54:56 by etuffleb          #+#    #+#             */
+/*   Updated: 2019/08/04 18:11:31 by etuffleb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 typedef struct		s_parsed_float
@@ -32,19 +44,21 @@ int		count_len(unsigned long a)
 	return (52 - i);
 }
 
-void	apa_mul(int power, char *str, int len)
+void	apa_mul(int power, char *str, int len, int *l)
 {
 	int		i;
 	int		buf;
 
 	buf = 0;
 	i = len;
-	while (--i >= 0)
+	while (--i >= 0 && len - i >= *l)
 	{
 		str[i] *= power;
 		str[i] += buf;
 		buf = str[i] / 10;
 		str[i] -= buf * 10;
+		if (len - i == l && buf)
+			++*l;
 	}
 }
 
@@ -89,22 +103,24 @@ void	apa_fill_i(char *str, unsigned long m, int len, int k)
 {
 	int		i;
 	int		j;
+	int		l;
 
 //	print_bits(&m, sizeof(m));
 	i = -1;
 	while (++i < len)
 		str[i] = 0;
+	l = 1;
 	i = 53;
 	while (--i >= 0)
 	{
-		apa_mul(2, str, len);
+		apa_mul(2, str, len, &l);
 		if (m & ((unsigned long)1 << i))
 			str[len - 1] += 1;
 //		test_putstr(str, len);
 	}
 	i = -1;
 	while (++i < k)
-		apa_mul(2, str, len);
+		apa_mul(2, str, len, &l);
 	i = -1;
 	while (++i < len)
 		str[i] += '0';
@@ -114,22 +130,24 @@ void	apa_fill_f(char *str, unsigned long m, int len, int k)
 {
 	int		i;
 	int		j;
+	int		l;
 
 //	print_bits(&m, sizeof(m));
 	i = -1;
 	while (++i < len)
 		str[i] = 0;
+	l = 1;
 	i = -1;
 	while (++i < len)
 	{
 		if (m & ((unsigned long)1 << i))
 			str[len - 1 - i] += 1;
-		apa_mul(5, str, len);
+		apa_mul(5, str, len, &l);
 //		test_putstr(str, len);
 	}
 	i = -1;
 	while (++i < k)
-		apa_mul(5, str, len);
+		apa_mul(5, str, len, &l);
 	i = -1;
 	while (++i < len)
 		str[i] += '0';
@@ -179,7 +197,7 @@ char	*apa_float(double n)
 //		if (parts.f_len < 0)
 //			parts.f_len = 0;	// ????????????????
 		parts.f = (f.parse.m << k) >> (52 - parts.f_len);
-		printf("%d %d\n", k, parts.i_len);
+//		printf("%d %d\n", k, parts.i_len);
 		k = 0;
 	}
 	il = (int)((parts.i_len /*-1 */ + ((k < 0) ? (0) : (k))) * 0.30103) + 1; // new -1

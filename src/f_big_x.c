@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 20:48:58 by kbatz             #+#    #+#             */
-/*   Updated: 2019/08/04 16:50:57 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/08/04 18:05:45 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ int			f_big_x(va_list ap, t_format f)
 	f.plus = 0;
 	nbr = ft_ultra_itoa(n, 16, 0, "0123456789ABCDEF");
 	len = ft_strlen(nbr) - 1;
-	return (big_x_counter(n, nbr, len, f));
+	return (big_x_count(n, nbr, len, f));
 }

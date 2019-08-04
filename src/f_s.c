@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 17:02:28 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/07/22 00:13:22 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/08/04 17:56:12 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "ft_printf.h"
 
-int f_s(va_list ap, t_format f)
+int	f_s(va_list ap, t_format f)
 {
 	char	*s;
 	char	*str;
