@@ -15,13 +15,13 @@ typedef union		u_float
 
 typedef struct		s_float_ip
 {
-	unsigned int	i;
+	unsigned long	i;
 	int				i_len;
-	unsigned int	f;
+	unsigned long	f;
 	int				f_len;
 }					t_float_ip;
 
-int		count_len(unsigned int a)
+int		count_len(unsigned long a)
 {
 	int		i;
 
@@ -32,49 +32,105 @@ int		count_len(unsigned int a)
 	return (52 - i);
 }
 
-char	*pow5(int i, int len, int k)
+void	apa_mul(int power, char *str, int len)
 {
-	static char		**arr = NULL;
-	int				j;
+	int		i;
+	int		buf;
 
-	k = (k < 0) ? (-k) : (0);
-	if (!arr)
+	buf = 0;
+	i = len;
+	while (--i >= 0)
 	{
-		if (!(arr = malloc(len * sizeof(char *))))
-			exit(1);
-		j = -1;
-		while (++j < len)
-			if (!(arr[j] = malloc((k + len) * sizeof(char))))
-				exit(1);
+		str[i] *= power;
+		str[i] += buf;
+		buf = str[i] / 10;
+		str[i] -= buf * 10;
 	}
 }
 
-char	*pow2(int i, int len, int k)
+void	print_byte(unsigned char byte)
 {
-	static char		**arr = NULL;
-	int				j;
+	int		i;
 
-	k = (k > 0) ? (k) : (0);
-	if (!arr)
+	i = 8;
+	while (--i >= 0)
+		if (byte & (1 << i))
+			write(1, "1", 1);
+		else
+			write(1, "0", 1);
+}
+
+void	print_bits(void *ptr, int size)
+{
+	ptr += size;
+	print_byte(*(unsigned char *)--ptr);
+	while (--size > 0)
 	{
-		if (!(arr = malloc(len * sizeof(char *))))
-			exit(1);
-		j = -1;
-		while (++j < len)
-			if (!(arr[j] = malloc((k + len) * sizeof(char))))
-				exit(1);
+		write(1, " ", 1);
+		print_byte(*(unsigned char *)--ptr);
 	}
-	arr[0] = 0;
+	write(1, "\n", 1);
 }
 
-void	apa_fill_i(char *str, unsigned int m, int len, int k)
+void	test_putstr(char *str, int len)
 {
-	return ;
+	char c;
+	write(1, "|", 1);
+	while (--len >= 0)
+	{
+		c = 48 + *str++;
+		write(1, &c, 1);
+	}
+	write(1, "|", 1);
+	write(1, "\n", 1);
 }
 
-void	apa_fill_f(char *str, unsigned int m, int len, int k)
+void	apa_fill_i(char *str, unsigned long m, int len, int k)
 {
-	return ;
+	int		i;
+	int		j;
+
+//	print_bits(&m, sizeof(m));
+	i = -1;
+	while (++i < len)
+		str[i] = 0;
+	i = 53;
+	while (--i >= 0)
+	{
+		apa_mul(2, str, len);
+		if (m & ((unsigned long)1 << i))
+			str[len - 1] += 1;
+//		test_putstr(str, len);
+	}
+	i = -1;
+	while (++i < k)
+		apa_mul(2, str, len);
+	i = -1;
+	while (++i < len)
+		str[i] += '0';
+}
+
+void	apa_fill_f(char *str, unsigned long m, int len, int k)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++i < len)
+		str[i] = 0;
+	i = 53;
+	while (--i >= 0)
+	{
+		apa_mul(5, str, len);
+		if (m & ((unsigned long)1 << i))
+			str[len - 1] += 1;
+	}
+	i = -1;
+	while (++i < k)
+		apa_mul(5, str, len);
+	i = -1;
+	while (++i < len)
+		str[i] += '0';
 }
 
 char	*apa_float(double n)
@@ -118,18 +174,22 @@ char	*apa_float(double n)
 		parts.i = (f.parse.m >> (52 - k)) | ((unsigned long)1 << (k));
 		parts.i_len = k + 1;
 		parts.f_len = count_len(f.parse.m) - k;
+//		if (parts.f_len < 0)
+//			parts.f_len = 0;	// ????????????????
 		parts.f = (f.parse.m << k) >> (52 - parts.i_len);
 		k = 0;
 	}
-	il = (int)((parts.i_len + ((k < 0) ? (0) : (k))) * 0.30103) + 1;
+	il = (int)((parts.i_len /*-1 */ + ((k < 0) ? (0) : (k))) * 0.30103) + 1; // new -1
 	printf("len: %d | %ld %ld %ld |\n", il, f.parse.s, f.parse.e, f.parse.m);
 	if (!(str = malloc((1 + il + 1 + parts.f_len + 1) * sizeof(char))))
 		exit(1);
+	printf("%lu, %d, %d\n", parts.i, il, k);
 	str[0] = (f.parse.s) ? '-' : '+';
-	apa_fill_i(str + 1, parts.i, parts.i_len, k);
+	apa_fill_i(str + 1, parts.i, il, k);
 	str[1 + il] = '.';
 	apa_fill_f(str + 1 + il + 1, parts.f, parts.f_len, k);
 	str[1 + il + 1 + parts.f_len] = 0;
+	write(1, str, 1 + il + 1 + parts.f_len);
 	return (str);
 }
 

@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <libc.h>
+//#include <libc.h>
+#include <unistd.h>
 #include "ft_printf.h"
 
 #define TEST1 "%f\n", (long double)(-10.0 / 3.0)
@@ -24,9 +25,9 @@ int		main(int ac, char  *av[])
 //	int		b;
 //	void	*ptr;
 	double	f;
-	int		l;
+	int		b;
+	int		a;
 
-	*(unsigned long *)&f = 0x7fefffffffffffff;
 	(void)ac;
 	(void)av;
 /*	printf("-\n");
@@ -38,11 +39,14 @@ int		main(int ac, char  *av[])
 	else
 		printf("false: %d vs %d\n", a, b);
 	printf("|%lu %lu %lu|\n", sizeof(float), sizeof(double), sizeof (long double));*/
-	if (ac == 2)
+	if (ac > 2)
 	{
-		ft_printf("%f", f);
-		l = printf("val: %.0f\n", f);
-		printf("%d\n", l - 6);
+		f = (double)atoi(av[1]) / (double)atoi(av[2]);
+//		*(unsigned long *)&f = 0xffefffffffffffff;
+		a = printf("+ | %f\n", f);
+		b = ft_printf("- | %f\n", f);
+		printf("%d vs %d\n", a, b);
+//		ft_printf("%f\n", f);
 	}
 	return (0);
 }
