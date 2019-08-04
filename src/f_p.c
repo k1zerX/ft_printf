@@ -3,20 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   f_p.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 22:24:37 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/25 18:56:52 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/08/04 17:01:38 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		f_p(va_list ap, t_format f)
+static int	p_counter(unsigned long long int n, char *nbr, int len, t_format f)
+{
+	char	*str;
+
+	if (n == 0 && f.precision == 0)
+		len = 0;
+	f.precision -= len;
+	if (f.precision < 0)
+		f.precision = 0;
+	f.precision += 2;
+	f.width -= f.precision + len + f.plus;
+	if (f.width < 0)
+		f.width = 0;
+	str = malloc((f.width + f.precision + len + f.plus + 1) * sizeof(*str));
+	if (!str)
+		exit(1);
+	ft_intfill(str, nbr, f, len);
+	str[((f.minus || (!f.minus && f.zero)) ? (0) : (f.width)) + 1] = 'x';
+	write(1, str, f.width + f.precision + len + f.plus);
+	free(str);
+	free(nbr);
+	return (f.width + f.precision + len + f.plus);
+}
+
+int			f_p(va_list ap, t_format f)
 {
 	unsigned long long int	n;
 	char					*nbr;
-	char					*str;
 	int						len;
 
 	n = va_arg(ap, unsigned long long int);
@@ -28,21 +51,5 @@ int		f_p(va_list ap, t_format f)
 	f.plus = 0;
 	nbr = ft_ultra_itoa(n, 16, 0, "0123456789abcdef");
 	len = ft_strlen(nbr) - 1;
-	if (n == 0 && f.precision == 0)
-		len = 0;
-	f.precision -= len;
-	if (f.precision < 0)
-		f.precision = 0;
-	f.precision += 2;
-	f.width -= f.precision + len + f.plus;
-	if (f.width < 0)
-		f.width = 0;
-	if (!(str = malloc((f.width + f.precision + len + f.plus + 1) * sizeof(*str))))
-		exit(1);
-	ft_intfill(str, nbr, f, len);
-	str[((f.minus || (!f.minus && f.zero)) ? (0) : (f.width)) + 1] = 'x';
- 	write(1, str, f.width + f.precision + len + f.plus);
-	free(str);
-	free(nbr);
-	return (f.width + f.precision + len + f.plus);
+	return (p_counter(n, nbr, len, f));
 }

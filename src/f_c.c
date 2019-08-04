@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   f_c.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 23:09:42 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/22 00:13:19 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/08/04 16:53:36 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int f_c(va_list ap, t_format f)
+int	f_c(va_list ap, t_format f)
 {
 	char	c;
 	char	*str;

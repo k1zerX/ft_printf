@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   f_percent.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 00:02:13 by kbatz             #+#    #+#             */
-/*   Updated: 2019/07/22 00:13:22 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/08/04 16:54:14 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int f_percent(va_list ap, t_format f)
+int	f_percent(va_list ap, t_format f)
 {
 	char	*str;
 
