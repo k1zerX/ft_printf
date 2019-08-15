@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 20:48:18 by kbatz             #+#    #+#             */
-/*   Updated: 2019/08/04 19:18:09 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/08/15 23:04:02 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int			f_o(va_list ap, t_format f)
 {
 	unsigned long long int	n;
 	char					*nbr;
-	char					*str;
 	int						len;
 
 	n = va_arg(ap, unsigned long long int);

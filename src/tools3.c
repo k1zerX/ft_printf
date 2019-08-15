@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 19:23:48 by kbatz             #+#    #+#             */
-/*   Updated: 2019/08/04 20:02:49 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/08/15 23:04:24 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	apa_fill_i(char *str, unsigned long m, int len, int k)
 {
 	int		i;
-	int		j;
 	int		l;
 
 	i = -1;
@@ -40,7 +39,6 @@ void	apa_fill_i(char *str, unsigned long m, int len, int k)
 void	apa_fill_f(char *str, unsigned long m, int len, int k)
 {
 	int		i;
-	int		j;
 	int		l;
 
 	i = -1;

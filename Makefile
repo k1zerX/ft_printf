@@ -6,7 +6,7 @@
 #    By: kbatz <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/25 21:10:51 by kbatz             #+#    #+#              #
-#    Updated: 2019/07/25 18:24:21 by kbatz            ###   ########.fr        #
+#    Updated: 2019/08/15 23:25:46 by kbatz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,13 +24,28 @@ TESTDIR	= test/
 
 LIBDIR	= $(addsuffix /,$(LIB))
 LHD		= $(LIBDIR)
-SRC		= $(patsubst $(SRCDIR)%,%,$(wildcard $(SRCDIR)*.c)) main.c
+SRC		= f_big_x.c \
+		  f_c.c \
+		  f_d.c \
+		  f_f.c \
+		  f_i.c \
+		  f_o.c \
+		  f_p.c \
+		  f_percent.c \
+		  f_s.c \
+		  f_u.c \
+		  f_x.c \
+		  ft_printf.c \
+		  tools.c \
+		  tools2.c \
+		  tools3.c \
+		  tools4.c
 OBJ		= $(SRC:%.c=%.o)
 HDR		= $(wildcard $(HDRDIR)*.h)
 TEST	= $(patsubst $(TESTDIR),%,$(wildcard $(TESTDIR)*))
 LFLAG	= $(addprefix -L,$(LIBDIR)) $(addprefix -,$(patsubst lib%,l%,$(LIB)))
 IFLAG	= $(addprefix -I,$(HDRDIR)) $(addprefix -I,$(LHD))
-CFLAG	= #-Wall -Wextra -Werror
+CFLAG	= -Wall -Wextra -Werror
 
 # **************************************************************************** #
 
@@ -64,17 +79,3 @@ lib%:
 norm:
 	norminette $(addprefix $(SRCDIR), $(SRC))
 	norminette $(addprefix $(HDRDIR), $(HDR))
-
-t: all $(TEST)
-	#gcc $(addprefix $(OBJDIR), $(OBJ)) -o run $(IFLAG) $(LFLAG)
-	gcc -o run $(IFLAG) -L./ -lftprintf
-	./run
-
-$(TEST): %:
-	@echo "--------------------------------------------------"
-	@echo "| >>>>> TEST \""$@"\" START >>>>> |"
-	@echo ""
-	@./$(NAME) $(TESTDIR)$@
-	@echo ""
-	@echo "| <<<<< TEST \""$@"\" END <<<<< |"
-	@echo "--------------------------------------------------"
