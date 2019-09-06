@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:54:56 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/08/04 20:27:59 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 00:44:13 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,27 @@ int			float_strlen(char *nbr)
 	return (i);
 }
 
+void		ft_floatround(char *nbr, int precision)
+{
+	++precision;
+	if (nbr[precision + 1] >= '5')
+	{
+		while (precision)
+		{
+			if (++nbr[precision] > '9')
+				nbr[precision] = '0';
+			else
+				return ;
+			--precision;
+		}
+	}
+}
+
 void		ft_floatfill(char *str, char *nbr, t_format f, int len)
 {
 	int		i;
 
+	ft_floatround(nbr, f.precision);
 	i = -1;
 	if (!f.zero && !f.minus)
 		while (++i < f.width)
