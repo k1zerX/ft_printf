@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:54:56 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/09/07 16:20:14 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 18:21:23 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,11 @@ int			f_f(va_list ap, t_format f)
 	long double		n;
 	char			*nbr;
 
+	n = va_arg(ap, long double);
 	if (f.l_big)
-		n = va_arg(ap, long double);
+		n = (long double)n;
 	else
-		n = va_arg(ap, double);
+		n = (double)n;
 	nbr = apa_float(n);
 	if (f.minus)
 		f.zero = 0;

@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 19:23:48 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 16:26:01 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 19:10:32 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ void	apa_fill_i(char *str, unsigned long m, int len, int k)
 	int		i;
 	int		l;
 
+//	print_bits(&m, sizeof(m));
 	i = -1;
 	while (++i < len)
 		str[i] = 0;
 	l = 1;
-	i = M_LEN + 1;
+	i = M_LEN;
 	while (--i >= 0)
 	{
 		apa_mul(2, str, len, &l);
@@ -59,6 +60,7 @@ void	apa_fill_i(char *str, unsigned long m, int len, int k)
 			str[len - 1] += 1;
 	}
 	i = -1;
+	(void)k;
 	while (++i < k)
 		apa_mul(2, str, len, &l);
 	i = -1;
@@ -80,9 +82,8 @@ void	apa_fill_f(char *str, unsigned long m, int len, int k)
 	while (++i < len)
 	{
 //		print_bits(&m, sizeof(m));
-		if (m & ((unsigned long)1))
+		if (m & ((unsigned long)1 << i))
 			str[len + k - 1 - i] += 1;
-		m >>= 1;
 		apa_mul(5, str, len + k, &l);
 /*		int j = -1;
 		while (++j < len)
@@ -106,6 +107,7 @@ void	apa_if(int *k, t_float f, t_float_ip *parts)
 {
 	if (*k > M_LEN)
 	{
+		*k += 1;
 		parts->i = f.parse.m;
 		parts->i_len = M_LEN;
 		parts->f = 0;
@@ -118,18 +120,20 @@ void	apa_if(int *k, t_float f, t_float_ip *parts)
 		parts->i_len = 0;
 		parts->f_len = count_len(f.parse.m);
 		parts->f = f.parse.m >> (M_LEN - parts->f_len);
-		++parts->f_len;
 	}
 	else
 	{
+		*k += 1;
 		parts->i = f.parse.m >> (M_LEN - *k);
 		parts->i_len = *k;
 		parts->f_len = count_len(f.parse.m);
 		parts->f = f.parse.m >> (M_LEN - parts->f_len);
 		parts->f_len -= *k;
 		parts->f &= ~(~((unsigned long)0) << parts->f_len);
+//		print_bits(&parts->f, 8);
+//		printf("%d\n", parts->f_len);
 //		printf("%lu\n", parts->f);
-		*k = 0;
+		*k = -1;
 	}
 }
 
@@ -166,7 +170,9 @@ char	*apa_float(long double n)
 			return ("inf");
 	}
 //	printf("%hu %hu %lu\n", f.parse.s, f.parse.e, f.parse.m);
-	k = f.parse.e - ~(~((unsigned)0) << (E_LEN - 1)) + 1;
+	k = f.parse.e - ~(~((unsigned)0) << (E_LEN - 1));
+//	printf("%d\n", k);
+//	print_bits(&n, 10);
 	apa_if(&k, f, &parts);
 	il = (int)((((parts.i_len) ? (parts.i_len) : (1)) + ((k < 0) ? (0) : (k))) * 0.30103) + 1;
 	//printf("(%d - 1 + %d) * 0.30103 + 1 = %d\n", parts.i_len, k, il);

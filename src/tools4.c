@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 19:44:42 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 16:05:14 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 18:56:53 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ void	apa_mul(int power, char *str, int len, int *l)
 		str[i] -= buf * 10;
 		if ((len - i == *l) && buf)
 			++*l;
+//		if (power == 2)
 //		printf("%d", str[i]);
 	}
+//		if (power == 2)
 //	printf("\n");
 }
