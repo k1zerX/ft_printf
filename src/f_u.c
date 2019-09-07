@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   f_u.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 20:48:35 by kbatz             #+#    #+#             */
-/*   Updated: 2019/08/04 20:15:56 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 16:39:44 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,16 @@ int		f_u(va_list ap, t_format f)
 	unsigned long long int	n;
 	char					*nbr;
 
-	n = va_arg(ap, unsigned long long int);
 	if (f.type == FT_HH)
-		n = (unsigned char)n;
+		n = va_arg(ap, unsigned char);
 	else if (f.type == FT_H)
-		n = (unsigned short int)n;
+		n = va_arg(ap, unsigned short int);
 	else if (f.type == FT_L)
-		n = (unsigned long int)n;
+		n = va_arg(ap, unsigned long int);
 	else if (f.type == FT_LL)
-		n = (unsigned long long int)n;
+		n = va_arg(ap, unsigned long long int);
 	else
-		n = (unsigned int)n;
+		n = va_arg(ap, unsigned int);
 	if (f.minus)
 		f.zero = 0;
 	if (f.zero)
