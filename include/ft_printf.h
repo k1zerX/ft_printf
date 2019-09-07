@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:39:27 by kbatz             #+#    #+#             */
-/*   Updated: 2019/08/04 19:53:15 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 15:59:37 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define FT_H	-1
 # define FT_L	1
 # define FT_LL	2
+# define M_LEN	64
+# define E_LEN	15
 
 typedef struct		s_format
 {
@@ -29,6 +31,7 @@ typedef struct		s_format
 	unsigned char	minus	: 1;
 	unsigned char	plus	: 1;
 	unsigned char	space	: 1;
+	unsigned char	l_big	: 1;
 	int				width;
 	int				precision;
 	char			type;
@@ -42,15 +45,15 @@ typedef struct		s_conv
 
 typedef struct		s_parsed_float
 {
-	unsigned long	m	: 52;
-	unsigned long	e	: 11;
-	unsigned long	s	: 1;
+	unsigned long	m	: M_LEN;
+	unsigned short	e	: E_LEN;
+	unsigned short	s	: 1;
 }					t_parsed_float;
 
 typedef union		u_float
 {
 	t_parsed_float	parse;
-	double			val;
+	long double		val;
 }					t_float;
 
 typedef struct		s_float_ip
@@ -67,7 +70,7 @@ t_format			format(const char *restrict format, int len);
 void				reformat(t_format *f, const char *restrict format);
 int					count_len(unsigned long a);
 void				apa_mul(int power, char *str, int len, int *l);
-char				*apa_float(double n);
+char				*apa_float(long double n);
 void				ft_intfill(char *str, char *nbr, t_format f, int len);
 void				ft_strfill(char *str, char *s, t_format f, int len);
 int					ft_strlen(char *str);

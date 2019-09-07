@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 19:44:42 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 00:30:54 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 16:05:14 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int		count_len(unsigned long a)
 	int		i;
 
 	i = -1;
-	while (++i < 52)
+	while (++i < M_LEN)
 		if (a & (1 << i))
 			break ;
-	return (52 - i);
+	return (M_LEN - i);
 }
 
 #include <stdio.h>

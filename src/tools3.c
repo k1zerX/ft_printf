@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 19:23:48 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 00:30:53 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 16:26:01 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	apa_fill_i(char *str, unsigned long m, int len, int k)
 	while (++i < len)
 		str[i] = 0;
 	l = 1;
-	i = 53;
+	i = M_LEN + 1;
 	while (--i >= 0)
 	{
 		apa_mul(2, str, len, &l);
@@ -104,29 +104,28 @@ void	apa_fill_f(char *str, unsigned long m, int len, int k)
 
 void	apa_if(int *k, t_float f, t_float_ip *parts)
 {
-	if (*k > 52)
+	if (*k > M_LEN)
 	{
-		parts->i = f.parse.m | ((unsigned long)1 << 52);
-		parts->i_len = 53;
+		parts->i = f.parse.m;
+		parts->i_len = M_LEN;
 		parts->f = 0;
 		parts->f_len = 0;
-		*k -= 52;
+		*k -= M_LEN;
 	}
 	else if (*k < 0)
 	{
 		parts->i = 0;
 		parts->i_len = 0;
 		parts->f_len = count_len(f.parse.m);
-		parts->f = (f.parse.m >> (52 - parts->f_len)) | \
-				((unsigned long)1 << parts->f_len);
+		parts->f = f.parse.m >> (M_LEN - parts->f_len);
 		++parts->f_len;
 	}
 	else
 	{
-		parts->i = (f.parse.m >> (52 - *k)) | ((unsigned long)1 << (*k));
-		parts->i_len = *k + 1;
+		parts->i = f.parse.m >> (M_LEN - *k);
+		parts->i_len = *k;
 		parts->f_len = count_len(f.parse.m);
-		parts->f = f.parse.m >> (52 - parts->f_len);
+		parts->f = f.parse.m >> (M_LEN - parts->f_len);
 		parts->f_len -= *k;
 		parts->f &= ~(~((unsigned long)0) << parts->f_len);
 //		printf("%lu\n", parts->f);
@@ -149,7 +148,7 @@ char	*apa_get(t_float f, t_float_ip parts, int il, int k)
 	return (str);
 }
 
-char	*apa_float(double n)
+char	*apa_float(long double n)
 {
 	t_float		f;
 	t_float_ip	parts;
@@ -166,7 +165,8 @@ char	*apa_float(double n)
 		else
 			return ("inf");
 	}
-	k = f.parse.e - 1023;
+//	printf("%hu %hu %lu\n", f.parse.s, f.parse.e, f.parse.m);
+	k = f.parse.e - ~(~((unsigned)0) << (E_LEN - 1)) + 1;
 	apa_if(&k, f, &parts);
 	il = (int)((((parts.i_len) ? (parts.i_len) : (1)) + ((k < 0) ? (0) : (k))) * 0.30103) + 1;
 	//printf("(%d - 1 + %d) * 0.30103 + 1 = %d\n", parts.i_len, k, il);

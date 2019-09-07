@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 17:54:56 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/09/07 00:44:13 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 16:20:14 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ void		ft_floatfill(char *str, char *nbr, t_format f, int len)
 			*str++ = ' ';
 }
 
-static int	f_counter(char *nbr, int len, t_format f)
+static int	f_counter(char *nbr, t_format f)
 {
 	char	*str;
+	int		len;
 
+	len = float_strlen(nbr) - 1;
 	f.width -= len + f.plus + f.precision;
 	if (f.width < 0)
 		f.width = 0;
@@ -86,11 +88,13 @@ static int	f_counter(char *nbr, int len, t_format f)
 
 int			f_f(va_list ap, t_format f)
 {
-	double	n;
-	char	*nbr;
-	int		len;
+	long double		n;
+	char			*nbr;
 
-	n = va_arg(ap, double);
+	if (f.l_big)
+		n = va_arg(ap, long double);
+	else
+		n = va_arg(ap, double);
 	nbr = apa_float(n);
 	if (f.minus)
 		f.zero = 0;
@@ -107,6 +111,5 @@ int			f_f(va_list ap, t_format f)
 	}
 	if (f.zero)
 		f.space = 0;
-	len = float_strlen(nbr) - 1;
-	return (f_counter(nbr, len, f));
+	return (f_counter(nbr, f));
 }

@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 16:15:28 by etuffleb          #+#    #+#             */
-/*   Updated: 2019/08/04 19:18:13 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 16:21:50 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void		reformat(t_format *f, const char *restrict format)
 		f->plus = 1;
 	else if (*format == ' ')
 		f->space = 1;
+	else if (*format == 'L')
+		f->l_big = 1;
 	else if (*format == 'l')
 		++(f->type);
 	else if (*format == 'h')
@@ -117,8 +119,7 @@ t_format	format(const char *restrict format, int len)
 			f.zero = 1;
 		else if (ft_isdigit(*format))
 			f.width = mini_atoi(&format, &len);
-		else if (*format == '-' || *format == '+' || *format == ' ' || \
-				*format == 'l' || *format == 'h')
+		else
 			reformat(&f, format);
 		++format;
 	}
