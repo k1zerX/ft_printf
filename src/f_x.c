@@ -6,11 +6,12 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 20:48:58 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 17:43:23 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/09/07 21:30:56 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
 static int	x_counter(unsigned long long int n, char *nbr, int len, t_format f)
 {
@@ -18,11 +19,12 @@ static int	x_counter(unsigned long long int n, char *nbr, int len, t_format f)
 
 	if (n == 0)
 	{
-		if (f.precision != -1)
+		if (f.precision == 0)
 			len = f.precision;
 		f.sharp = 0;
 	}
 	f.precision -= len;
+//	printf("%d %d*%d*\n", f.zero, len, f.precision);
 	if (f.precision < 0)
 		f.precision = 0;
 	f.precision += f.sharp << 1;

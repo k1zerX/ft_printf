@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 19:23:48 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 19:10:32 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 20:18:38 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,8 @@ char	*apa_float(long double n)
 //	printf("%d\n", k);
 //	print_bits(&n, 10);
 	apa_if(&k, f, &parts);
-	il = (int)((((parts.i_len) ? (parts.i_len) : (1)) + ((k < 0) ? (0) : (k))) * 0.30103) + 1;
+	il = (int)((((parts.i_len) ? (parts.i_len) : (1)) + ((k < 0) ? (0) : (k))) * 0.30103) + 1 + 1;
+//	printf("%d %d\n", il, parts.i_len);
 	//printf("(%d - 1 + %d) * 0.30103 + 1 = %d\n", parts.i_len, k, il);
 	return (apa_get(f, parts, il, k));
 }

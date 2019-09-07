@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:20:44 by kbatz             #+#    #+#             */
-/*   Updated: 2019/08/04 20:27:57 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 22:20:10 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,13 @@ int		ft_while(va_list ap, const char *restrict *str, int *len, char **start)
 		if (g_conv[i].conv)
 			break ;
 	}
-	*str += *len + 1;
-	*start = (char *)*str;
+	if (!(*str)[*len])
+		*start = NULL;
+	else
+	{
+		*str += *len + 1;
+		*start = (char *)*str;
+	}
 	*len = 0;
 	return (res);
 }

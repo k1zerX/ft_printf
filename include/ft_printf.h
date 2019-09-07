@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:39:27 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 15:59:37 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 21:01:32 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,8 @@ void				ft_bzero(void *ptr, size_t size);
 int					mini_atoi(const char *restrict *format, int *len);
 char				ft_isdigit(char c);
 int					itoa_len(unsigned long long int nbr, int base);
+char				*ft_strcpy(char *dst, const char *src);
+int					ft_find_dot(char *str);
+void				ft_treatment(char *nbr);
 
 #endif

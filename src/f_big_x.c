@@ -6,19 +6,19 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 20:48:58 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 17:43:01 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/09/07 21:31:11 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	big_x_count(unsigned long long int n, char *nb, int len, t_format f)
+static int	big_x_count(unsigned long long int n, char *nbr, int len, t_format f)
 {
 	char	*str;
 
 	if (n == 0)
 	{
-		if (f.precision != -1)
+		if (f.precision == 0)
 			len = f.precision;
 		f.sharp = 0;
 	}
@@ -32,12 +32,12 @@ static int	big_x_count(unsigned long long int n, char *nb, int len, t_format f)
 	str = malloc((f.width + f.precision + len + f.plus) * sizeof(*str));
 	if (!str)
 		exit(1);
-	ft_intfill(str, nb, f, len);
+	ft_intfill(str, nbr, f, len);
 	if (f.sharp)
 		str[((f.minus || (!f.minus && f.zero)) ? (0) : (f.width)) + 1] = 'X';
 	write(1, str, f.width + f.precision + len + f.plus);
 	free(str);
-	free(nb);
+	free(nbr);
 	return (f.width + f.precision + len + f.plus);
 }
 

@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 19:44:42 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 18:56:53 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 21:05:40 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,45 @@ void	apa_mul(int power, char *str, int len, int *l)
 	}
 //		if (power == 2)
 //	printf("\n");
+}
+
+char	*ft_strcpy(char *dst, const char *src)
+{
+	char	*tmp;
+
+	tmp = dst;
+	while (*src)
+		*dst++ = *src++;
+	*dst = 0;
+	return (tmp);
+}
+
+int		ft_find_dot(char *str)
+{
+	char	*tmp;
+
+	tmp = str;
+	while (*tmp)
+	{
+		if (*tmp == '.')
+			return (tmp - str);
+		++tmp;
+	}
+	return (-1);
+}
+
+void	ft_treatment(char *nbr)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (nbr[i] && nbr[i] != '0')
+		++i;
+	j = i;
+	while (nbr[j] == '0' && (nbr[j + 1] != '.' && nbr[j + 1]))
+		++j;
+//	printf("%s vs ", nbr);
+	ft_strcpy(nbr + i, nbr + j);
+//	printf("%s\n", nbr);
 }
