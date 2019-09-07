@@ -6,11 +6,43 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 19:23:48 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 20:18:38 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 23:32:06 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+#include <stdio.h>
+
+size_t	ft_len(unsigned char *str)
+{
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		++len;
+	return (len);
+}
+
+char	*ft_to_char(unsigned char *str, size_t len)
+{
+	char	*res;
+	char	*buf;
+
+	if (!(res = malloc(len * sizeof(char))))
+		exit(1);
+	buf = res;
+	while (len--)
+	{
+		*buf = *str;
+		if (*buf >= 0 && *buf <= 9)
+			*buf += 48;
+//		printf("%c %d\n", *res, *str);
+		++buf;
+		++str;
+	}
+	return (res);
+}
 
 void	print_byte(unsigned char byte)
 {
@@ -42,7 +74,7 @@ void	print_bits(void *ptr, size_t size)
 }
 #include <stdio.h>
 
-void	apa_fill_i(char *str, unsigned long m, int len, int k)
+void	apa_fill_i(unsigned char *str, unsigned long m, int len, int k)
 {
 	int		i;
 	int		l;
@@ -60,15 +92,14 @@ void	apa_fill_i(char *str, unsigned long m, int len, int k)
 			str[len - 1] += 1;
 	}
 	i = -1;
-	(void)k;
-	while (++i < k)
-		apa_mul(2, str, len, &l);
+	while (++i < (k >> 2))
+		apa_mul(16, str, len, &l);
 	i = -1;
-	while (++i < len)
-		str[i] += '0';
+	while (++i < (k & 3))
+		apa_mul(2, str, len, &l);
 }
 
-void	apa_fill_f(char *str, unsigned long m, int len, int k)
+void	apa_fill_f(unsigned char *str, unsigned long m, int len, int k)
 {
 	int		i;
 	int		l;
@@ -82,8 +113,10 @@ void	apa_fill_f(char *str, unsigned long m, int len, int k)
 	while (++i < len)
 	{
 //		print_bits(&m, sizeof(m));
-		if (m & ((unsigned long)1 << i))
+		if (m & 1)
 			str[len + k - 1 - i] += 1;
+		++l;
+		m >>= 1;
 		apa_mul(5, str, len + k, &l);
 /*		int j = -1;
 		while (++j < len)
@@ -95,11 +128,10 @@ void	apa_fill_f(char *str, unsigned long m, int len, int k)
 			str[j] -= '0';*/
 	}
 	i = -1;
-	while (++i < k)
+	while (++i < (k >> 1))
+		apa_mul(25, str, len + k, &l);
+	if (k & 1)
 		apa_mul(5, str, len + k, &l);
-	i = -1;
-	while (++i < len + k)
-		str[i] += '0';
 //		print_bits(&m, sizeof(m));
 }
 
@@ -139,17 +171,17 @@ void	apa_if(int *k, t_float f, t_float_ip *parts)
 
 char	*apa_get(t_float f, t_float_ip parts, int il, int k)
 {
-	char	*str;
+	unsigned char	*str;
 
-	if (!(str = malloc((1 + il + 1 + parts.f_len + ((k > 0) ? (0) : (-++k)) + 1) * sizeof(char))))
+	if (!(str = malloc((1 + il + 1 + parts.f_len + ((k > 0) ? (0) : (-++k)) + 1) * sizeof(unsigned char))))
 		exit(1);
 //	printf("1 + %d + 1 + %d + 1\n", il, parts.f_len + ((k > 0) ? (0) : (-k)));
 	str[0] = (f.parse.s) ? '-' : '+';
 	apa_fill_i(str + 1, parts.i, il, k);
 	str[1 + il] = '.';
 	apa_fill_f(str + 1 + il + 1, parts.f, parts.f_len, -k);
-	str[1 + il + 1 + parts.f_len + (-k)] = 0;
-	return (str);
+	str[1 + il + 1 + parts.f_len + ((k > 0) ? (0) : (-k))] = 0;
+	return (ft_to_char(str, 1 + il + 1 + parts.f_len + ((k > 0) ? (0) : (-k)) + 1));
 }
 
 char	*apa_float(long double n)

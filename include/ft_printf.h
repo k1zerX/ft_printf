@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 21:39:27 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 21:01:32 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 23:03:28 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char				*ft_ultra_itoa(long long int n, int base, \
 t_format			format(const char *restrict format, int len);
 void				reformat(t_format *f, const char *restrict format);
 int					count_len(unsigned long a);
-void				apa_mul(int power, char *str, int len, int *l);
+void				apa_mul(int power, unsigned char *str, int len, int *l);
 char				*apa_float(long double n);
 void				ft_intfill(char *str, char *nbr, t_format f, int len);
 void				ft_strfill(char *str, char *s, t_format f, int len);

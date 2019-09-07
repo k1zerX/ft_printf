@@ -6,7 +6,7 @@
 /*   By: kbatz <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 19:44:42 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 21:05:40 by kbatz            ###   ########.fr       */
+/*   Updated: 2019/09/07 22:56:15 by kbatz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		count_len(unsigned long a)
 
 #include <stdio.h>
 
-void	apa_mul(int power, char *str, int len, int *l)
+void	apa_mul(int power, unsigned char *str, int len, int *l)
 {
 	int		i;
 	int		buf;
@@ -33,7 +33,7 @@ void	apa_mul(int power, char *str, int len, int *l)
 //	printf("%d\n", len);
 	buf = 0;
 	i = len;
-	while (--i >= 0 /*&& len - i <= *l*/)
+	while (--i >= 0 && len - i <= *l)
 	{
 		str[i] *= power;
 		str[i] += buf;
