@@ -6,7 +6,7 @@
 /*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 20:48:35 by kbatz             #+#    #+#             */
-/*   Updated: 2019/09/07 16:39:44 by etuffleb         ###   ########.fr       */
+/*   Updated: 2019/09/07 17:43:26 by etuffleb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,17 @@ int		f_u(va_list ap, t_format f)
 	unsigned long long int	n;
 	char					*nbr;
 
+	n = va_arg(ap, unsigned long long int);
 	if (f.type == FT_HH)
-		n = va_arg(ap, unsigned char);
+		n = (unsigned char)n;
 	else if (f.type == FT_H)
-		n = va_arg(ap, unsigned short int);
+		n = (unsigned short int)n;
 	else if (f.type == FT_L)
-		n = va_arg(ap, unsigned long int);
+		n = (unsigned long int)n;
 	else if (f.type == FT_LL)
-		n = va_arg(ap, unsigned long long int);
+		n = (unsigned long long int)n;
 	else
-		n = va_arg(ap, unsigned int);
+		n = (unsigned int)n;
 	if (f.minus)
 		f.zero = 0;
 	if (f.zero)
